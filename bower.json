@@ -1,0 +1,9 @@
+{
+  "name": "igliker",
+  "private": true,
+  "dependencies": {
+    "jquery": "~1.11.0",
+    "hello": "git@github.com:MrSwitch/hello.js.git#~0.2.6"
+  },
+  "devDependencies": {}
+}
