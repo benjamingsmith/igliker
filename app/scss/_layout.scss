@@ -18,7 +18,11 @@ a {
 
 button {
   padding:10px;
-  margin:10px 0 0 10px;
+  margin:10px 0 0 0px;
+}
+
+.container {
+  padding-left:10px;
 }
 
 .loggedInUser {
@@ -29,11 +33,12 @@ button {
 
 .search {
   position:relative;
-  margin:20px 0 0 10px;
+  margin:20px 0 0 0;
 }
 
 .search-results {
-  margin:10px 0 10px 10px;
+  width:800px;
+  margin:10px 0 10px 0;
   padding:0;
   float:left;
   li {
@@ -41,4 +46,18 @@ button {
     float:left;
     margin:2px;
   }
+  .results-item {
+    &.active {
+      border:2px solid #ff405b;
+    }
+  }
+}
+
+.next-page {
+  display:none;
+  float:left;
+  font-size:12px;
+  clear:left;
+  cursor:pointer;
+  margin-bottom:20px;
 }
