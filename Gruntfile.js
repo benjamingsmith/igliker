@@ -191,7 +191,7 @@ module.exports = function (grunt) {
                 exclude: ['<%= config.app %>/bower_components/bootstrap-sass/vendor/assets/javascripts/bootstrap.js']
             },
             sass: {
-                src: ['<%= config.app %>/scss/{,*/}*.{scss,sass}'],
+                src: ['<%= config.app %>/styles/{,*/}*.{scss,sass}'],
                 ignorePath: '<%= config.app %>/bower_components/'
             }
         },
@@ -202,7 +202,7 @@ module.exports = function (grunt) {
                 files: {
                     src: [
                         '<%= config.dist %>/scripts/{,*/}*.js',
-                        '<%= config.dist %>/css/{,*/}*.css',
+                        '<%= config.dist %>/styles/{,*/}*.css',
                         '<%= config.dist %>/images/{,*/}*.*',
                         '<%= config.dist %>/styles/fonts/{,*/}*.*',
                         '<%= config.dist %>/*.{ico,png}'
@@ -280,9 +280,9 @@ module.exports = function (grunt) {
         // cssmin: {
         //     dist: {
         //         files: {
-        //             '<%= config.dist %>/styles/main.css': [
-        //                 '.tmp/styles/{,*/}*.css',
-        //                 '<%= config.app %>/styles/{,*/}*.css'
+        //             '<%= config.dist %>/css/main.css': [
+        //                 '.tmp/css/{,*/}*.css',
+        //                 '<%= config.app %>/css/{,*/}*.css'
         //             ]
         //         }
         //     }
@@ -389,9 +389,9 @@ module.exports = function (grunt) {
         'cssmin',
         'uglify',
         'copy:dist',
-        'rev',
+        //'rev',
         'usemin',
-        'htmlmin'
+        //'htmlmin'
     ]);
 
     grunt.registerTask('default', [

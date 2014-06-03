@@ -10,11 +10,10 @@
         <meta name="viewport" content="width=device-width">
         <link rel="shortcut icon" href="/favicon.ico">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-        <!-- build:css styles/vendor.css -->
         <!-- bower:css -->
         <!-- endbower -->
         <!-- endbuild -->
-        <!-- build:css(.tmp) styles/main.css -->
+        <!-- build:css(.tmp) css/main.css -->
         <link rel="stylesheet" href="css/main.css">
         <!-- endbuild -->
     </head>
@@ -23,7 +22,15 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <div class="container">
-            <button class="ig">Login</button>
+            <button class="login">Login</button>
+            <button class="logout">Log Out</button>
+            <button class="load">Load</button>
+            <p class="loggedInUser"></p>
+
+            <div class="search">
+                <input type="text"><button class="search_hash">Submit</button>
+            </div>
+            <p class="searched-hash"></p>
         </div>
 
 
