@@ -15,6 +15,7 @@
 	}
 
 	function loadProfile(){
+		var igLoggedIn = hello('instagram').getAuthResponse();
 		// Get Profile
 		hello('instagram').api('me', function(data){
 			console.log('User Profile: ');
@@ -51,10 +52,10 @@
 	        	console.log(data);
 	        	$.each(data.data, function(index, value){
 	        		var imagePath = value.images.thumbnail.url;
-        			$('.search-results').append(
-        				'<li class="results-item"><img src="'+imagePath+'" /></li>'
-        			);
-	        		console.log(imagePath);
+        			 $('.search-results').append(
+        			 	'<li class="results-item"><img src="'+imagePath+'" /></li>'
+        			 );
+	        		console.log(value);
         		});
 	      	}
   	});
@@ -62,7 +63,8 @@
 
 	$('button.login').on('click',function(){
 		hello().login('instagram',{
-			redirect_uri:'http://127.0.0.1:9000'
+			redirect_uri:'http://igliker.com/'
+			//redirect_uri:'http://127.0.0.1:9000'
 		}, function(){
 			console.log('logged in');
 			var response = this.getAuthResponse();
@@ -81,6 +83,7 @@
 			userID = null;
 			userToken = null;
 		});
+		$('.loggedInUser').empty();
 	});
 
 	$('#hashSearch').on('submit', function(e){
