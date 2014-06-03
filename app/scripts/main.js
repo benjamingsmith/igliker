@@ -21,7 +21,7 @@
 			console.log(data);
 			userID = data.id;
 			userToken = igLoggedIn.access_token;
-			console.log(userID);
+			console.log('User ID: '+userID);
 			$('.loggedInUser').html('Logged in as @'+data.data.username);
 		});
 	}
@@ -39,6 +39,25 @@
 	      	}
 	    });
 		}
+  }
+
+  function searchHash(hashText){
+  	$.ajax({
+  		type:'GET',
+  		dataType:'jsonp',
+  		cache:false,
+  		url: 'https://api.instagram.com/v1/tags/'+hashText+'/media/recent?access_token='+userToken,
+	        success: function(data) {
+	        	console.log(data);
+	        	$.each(data.data, function(index, value){
+	        		var imagePath = value.images.thumbnail.url;
+        			$('.search-results').append(
+        				'<li class="results-item"><img src="'+imagePath+'" /></li>'
+        			);
+	        		console.log(imagePath);
+        		});
+	      	}
+  	});
   }
 
 	$('button.login').on('click',function(){
@@ -62,6 +81,18 @@
 			userID = null;
 			userToken = null;
 		});
+	});
+
+	$('#hashSearch').on('submit', function(e){
+		e.preventDefault();
+		var hashInput = $('#hashInput').val();
+		searchHash(hashInput);
+		console.log('searching for '+hashInput);
+	}).on({
+		keydown: function(e) {
+		  if (e.which === 32)
+		    return false;
+		}
 	});
 
 })();
