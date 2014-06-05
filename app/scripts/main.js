@@ -65,7 +65,7 @@
     		});
     	}
   	});
-  	$('.next-page').show();
+  	$('.next-page').css({'display':'inline'});
   }
 
   function nextResults(){
@@ -83,7 +83,7 @@
       	$.each(data.data, function(index, value){
       		var imagePath = value.images.thumbnail.url;
     			 $('.search-results').append(
-    			 	'<li class="results-item"><img src="'+imagePath+'" /></li>'
+    			 	'<li class="results-item" id="'+mediaId+'"><img src="'+imagePath+'" /></li>'
     			 );
       		console.log(value);
     		});
@@ -91,10 +91,32 @@
     });
   }
 
+  function activateItem(selection){
+  	if(selection.hasClass('active')){
+  		selection.removeClass('active');
+  	} else {
+  		selection.addClass('active');
+  	}
+  }
+
+  function likeSelected(){
+  	var selectedPhotos = $('.results-item.active');
+  	$.each(selectedPhotos,function(){
+  		console.log(this);
+  	});
+  }
+
+  function likeAll(){
+  	var allPhotos = $('.results-item');
+  	$.each(allPhotos,function(){
+  		console.log(this);
+  	});
+  }
+
 	$('button.login').on('click',function(){
 		hello().login('instagram',{
-			redirect_uri:'http://igliker.com/'
-			//redirect_uri:'http://127.0.0.1:9000'
+			//redirect_uri:'http://igliker.com/'
+			redirect_uri:'http://127.0.0.1:9000'
 		}, function(){
 			console.log('logged in');
 			var response = this.getAuthResponse();
@@ -109,6 +131,19 @@
 
 	$('.next-page').on('click',function(){
 		nextResults();
+	});
+
+	$('.like-selected').on('click',function(){
+		likeSelected();
+	});
+
+	$('.like-all').on('click',function(){
+		likeAll();
+	});
+
+	$('.search-results').on('click', '.results-item', function() {
+		activateItem($(this));
+		console.log('active');
 	});
 
 	$('button.logout').on('click',function(){

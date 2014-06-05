@@ -3,6 +3,11 @@
   padding:0;
 }
 
+@mixin button {
+  cursor:pointer;
+  outline:none;
+}
+
 body, html {
   position:absolute;
   width:100%;
@@ -18,7 +23,10 @@ a {
 
 button {
   padding:10px;
-  margin:10px 0 0 0px;
+  margin:10px 0 0 10px;
+  &.login {
+    margin:0;
+  }
 }
 
 .container {
@@ -37,16 +45,18 @@ button {
 }
 
 .search-results {
-  width:800px;
-  margin:10px 0 10px 0;
+  margin:0 0 10px 0;
   padding:0;
   float:left;
+  clear:left;
   li {
     list-style:none;
-    float:left;
+    display:inline-block;
     margin:2px;
   }
   .results-item {
+    @include button;
+    border:2px solid #FFF;
     &.active {
       border:2px solid #ff405b;
     }
@@ -55,9 +65,20 @@ button {
 
 .next-page {
   display:none;
-  float:left;
-  font-size:12px;
-  clear:left;
-  cursor:pointer;
-  margin-bottom:20px;
+  font-size:14px;
+  @include button;
+}
+
+.like-selected {
+  @include button;
+  display:inline;
+  font-size:14px;
+  margin-left:5px;
+}
+
+.like-all {
+  @include button;
+  display:inline;
+  margin-left:5px;
+  font-size:14px;
 }
