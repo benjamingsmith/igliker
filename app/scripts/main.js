@@ -58,8 +58,9 @@
       	console.log(nextUrl);
       	$.each(data.data, function(index, value){
       		var imagePath = value.images.thumbnail.url;
+      		var mediaId = value.id;
     			 $('.search-results').append(
-    			 	'<li class="results-item"><img src="'+imagePath+'" /></li>'
+    			 	'<li class="results-item" id="'+mediaId+'"><img src="'+imagePath+'" /></li>'
     			 );
       		console.log(value);
     		});
@@ -82,6 +83,7 @@
       	console.log(nextUrl);
       	$.each(data.data, function(index, value){
       		var imagePath = value.images.thumbnail.url;
+      		var mediaId = value.id;
     			 $('.search-results').append(
     			 	'<li class="results-item" id="'+mediaId+'"><img src="'+imagePath+'" /></li>'
     			 );
@@ -101,8 +103,17 @@
 
   function likeSelected(){
   	var selectedPhotos = $('.results-item.active');
-  	$.each(selectedPhotos,function(){
-  		console.log(this);
+  	$.each(selectedPhotos,function(index, value){
+  		var mediaId = $(value).attr('id');
+  		console.log(mediaId);
+  		$.ajax({
+          url:'like.php',
+          type: 'POST',
+          data: ({
+          	'user_token' : userToken,
+          	'media_id' : mediaId
+          })
+      });
   	});
   }
 
@@ -114,14 +125,9 @@
   }
 
 	$('button.login').on('click',function(){
-		hello().login('instagram',{
-			//redirect_uri:'http://igliker.com/'
-			redirect_uri:'http://127.0.0.1:9000'
-		}, function(){
-			console.log('logged in');
-			var response = this.getAuthResponse();
-			userToken = response.access_token;
-			loadProfile();
+
+		hello('instagram').login({
+			scope : 'likes',
 		});
 	});
 

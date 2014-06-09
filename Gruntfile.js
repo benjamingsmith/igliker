@@ -60,6 +60,7 @@ module.exports = function (grunt) {
                 files: [
                     '<%= config.app %>/{,*/}*.html',
                     '.tmp/css/{,*/}*.css',
+                    '<%= config.app %>/{,*/}*.php',
                     '<%= config.app %>/images/{,*/}*'
                 ]
             }
@@ -313,6 +314,7 @@ module.exports = function (grunt) {
                         '.htaccess',
                         'images/{,*/}*.webp',
                         '{,*/}*.html',
+                        '*.php',
                         'styles/fonts/{,*/}*.*',
                         'bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/*.*'
                     ]
