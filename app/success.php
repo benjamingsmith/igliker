@@ -1,20 +1,31 @@
-<!--<?php
+<?php
 
-require 'instagram.class.php';
-
-// initialize class
-$instagram = new Instagram(array(
-  'apiKey'      => 'ba466f6c17c64ff99b229085129f7cd9',
-  'apiSecret'   => 'd4e44c6a4a2548f79412b1b2b8a37e54',
-  'apiCallback' => '/success.php' // must point to success.php
-));
-
-// create login URL
-$loginUrl = $instagram->getLoginUrl();
-
+// receive OAuth code parameter
 $code = $_GET['code'];
 
-?>-->
+// check whether the user has granted access
+if (isset($code)) {
+
+  // receive OAuth token object
+  $data = $instagram->getOAuthToken($code);
+  $username = $username = $data->user->username;
+  
+  // store user access token
+  $instagram->setAccessToken($data);
+
+  // now you have access to all authenticated user methods
+  $result = $instagram->getUserMedia();
+
+} else {
+
+  // check whether an error occurred
+  if (isset($_GET['error'])) {
+    echo 'An error occurred: ' . $_GET['error_description'];
+  }
+
+}
+
+?>
 
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -63,7 +74,6 @@ $code = $_GET['code'];
         <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->
         <script src="bower_components/jquery/dist/jquery.js"></script>
-        <script src="bower_components/hello/dist/hello.all.min.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 

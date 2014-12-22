@@ -10,39 +10,20 @@
 		'instagram' : 'ba466f6c17c64ff99b229085129f7cd9'
 	});
 
-	// check if user is already logged in
-	if(igLoggedIn != null) {
-		console.log('already logged in');
-		loadProfile();
-	}
-
 	function loadProfile(){
-		var igLoggedIn = hello('instagram').getAuthResponse();
-		// Get Profile
+		//var igLoggedIn = hello('instagram').getAuthResponse();
+		// get profile
 		hello('instagram').api('me', function(data){
-			console.log('User Profile: ');
-			console.log(data);
-			userID = data.id;
-			userToken = igLoggedIn.access_token;
-			console.log('User ID: '+userID);
-			$('.loggedInUser').html('Logged in as @'+data.data.username);
+			if(data.meta.code === 200){
+				console.log('User Profile: ');
+				console.log(data);
+				userID = data.id;
+				userToken = igLoggedIn.access_token;
+				console.log('User ID: '+userID);
+				$('.loggedInUser').html('Logged in as @'+data.data.username);
+			}
 		});
 	}
-
-	function loadInstagram(){
-		if(userToken != null){
-			console.log(userToken);
-			$.ajax({
-	      type:'GET',
-	        dataType:'jsonp',
-	        cache: false,
-	        url: 'https://api.instagram.com/v1/users/'+userID+'/media/recent/?access_token='+userToken,
-	        success: function(data) {
-	        	console.log(data);
-	      	}
-	    });
-		}
-  }
 
   function searchHash(hashText){
   	// empty current results
@@ -60,7 +41,7 @@
       		var imagePath = value.images.thumbnail.url;
       		var mediaId = value.id;
     			 $('.search-results').append(
-    			 	'<li class="results-item" id="'+mediaId+'"><img src="'+imagePath+'" /></li>'
+    			 	'<li class="results-item" data-id="'+mediaId+'"><img src="'+imagePath+'" /></li>'
     			 );
       		console.log(value);
     		});
@@ -85,7 +66,7 @@
       		var imagePath = value.images.thumbnail.url;
       		var mediaId = value.id;
     			 $('.search-results').append(
-    			 	'<li class="results-item" id="'+mediaId+'"><img src="'+imagePath+'" /></li>'
+    			 	'<li class="results-item" data-id="'+mediaId+'"><img src="'+imagePath+'" /></li>'
     			 );
       		console.log(value);
     		});
@@ -104,16 +85,18 @@
   function likeSelected(){
   	var selectedPhotos = $('.results-item.active');
   	$.each(selectedPhotos,function(index, value){
-  		var mediaId = $(value).attr('id');
-  		console.log(mediaId);
-  		$.ajax({
-          url:'like.php',
-          type: 'POST',
-          data: ({
-          	'user_token' : userToken,
-          	'media_id' : mediaId
-          })
-      });
+  		var mediaId = $(value).attr('data-id');
+  		likePhoto(mediaId);
+  	});
+  }
+
+  function likePhoto(photoId){
+  	console.log(photoId);
+  	hello('instagram').api('me/like', 'post', { id : photoId }).then( function(r){
+  			console.log(r);
+  			if(r.meta.code === 200){
+  				console.log('photo liked');
+  			}
   	});
   }
 
@@ -125,14 +108,10 @@
   }
 
 	$('button.login').on('click',function(){
-
 		hello('instagram').login({
 			scope : 'likes',
+			redirect_uri:'index.html'
 		});
-	});
-
-	$('.load').on('click',function(){
-		loadInstagram();
 	});
 
 	$('.next-page').on('click',function(){
@@ -171,6 +150,14 @@
 		  if (e.which === 32)
 		    return false;
 		}
+	});
+
+	$(document).ready(function(){
+		var instagram = hello( 'instagram' );
+		//instagram.api('me').then(loadProfile);
+		hello.on('auth.login', function(auth){
+			loadProfile();
+		});
 	});
 
 })();
