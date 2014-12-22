@@ -2,7 +2,9 @@
 	'use strict';
 	var userID,
 	userToken,
-	nextUrl;
+	nextUrl,
+	likeProcessing,
+	likeInterval;
 	var igLoggedIn = hello('instagram').getAuthResponse();
 	var selectedImages =[];
 
@@ -44,7 +46,6 @@
     			 $('.search-results').append(
     			 	'<li class="results-item" data-id="'+mediaId+'"><img src="'+imagePath+'" /></li>'
     			 );
-      		console.log(value);
     		});
     	}
   	});
@@ -83,12 +84,32 @@
   	}
   }
 
-  function likeSelected(){
-  	var selectedPhotos = $('.results-item.active');
-  	$.each(selectedPhotos,function(index, value){
-  		var mediaId = $(value).attr('data-id');
-  		likePhoto(mediaId);
+  function startLiking(){
+  	var delaySelected = $('#likeDelay').val()*1000;
+  	var likeDelay = $('#likeDelay').val()*delaySelected;
+  	var photosSelected = $('.results-item.active').length;
+  	var photosToLike = [];
+  	var currentPhoto = 0;
+  	// put all selected photos into an array
+  	$.each($('.results-item.active'), function(i,v){
+  		var mediaId = $(v).attr('data-id');
+  		photosToLike.push(mediaId);
   	});
+  	//console.log(photosToLike);
+  	likeInterval = setInterval(function(){
+  		if(photosSelected > 0){
+  			$('.interaction-blocker').show();
+  			$('.results-item').css({'opacity':'.6'});
+		  	console.log(photosToLike[currentPhoto]);
+		  	likePhoto(photosToLike[currentPhoto]);
+		  	currentPhoto++;
+		  	photosSelected--;
+  		} else {
+  			$('.interaction-blocker').hide();
+  			$('.results-item').css({'opacity':'1'});
+  			clearInterval(likeInterval);
+  		}
+  	},likeDelay);
   }
 
   function likePhoto(photoId){
@@ -100,11 +121,14 @@
   	});
   }
 
+  function likeSelected(){
+  	startLiking();
+  }
+
   function likeAll(){
   	var allPhotos = $('.results-item');
-  	$.each(allPhotos,function(){
-  		console.log(this);
-  	});
+  	$('.results-item').addClass('active');
+  	startLiking();
   }
 
 	$('button.login').on('click',function(){
@@ -128,7 +152,6 @@
 
 	$('.search-results').on('click', '.results-item', function() {
 		activateItem($(this));
-		console.log('active');
 	});
 
 	$('button.logout').on('click',function(){

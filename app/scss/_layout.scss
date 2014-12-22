@@ -79,6 +79,15 @@ button {
   float:left;
 }
 
+.interaction-blocker {
+  position:absolute;
+  width:calc(100% - 20px);
+  height:calc(100% - 80px);
+  background:rgba(0,0,0,0);
+  z-index:5;
+  display:none;
+}
+
 .search-results {
   margin:0 0 10px 0;
   padding:0;
