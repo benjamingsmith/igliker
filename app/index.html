@@ -40,9 +40,10 @@ $code = $_GET['code'];
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <div class="container">
-            <button class="login" ><a href="<? echo $loginUrl ?>">Login</a></button>
-            <button class="logout">Log Out</button>
-            <!-- <button class="load">Load</button> -->
+            <div class="login-btns">
+                <button class="login" ><a href="<? echo $loginUrl ?>">Login</a></button>
+                <button class="logout">Log Out</button>
+            </div>
             <p class="loggedInUser"></p>
 
             <div class="search">
@@ -50,13 +51,19 @@ $code = $_GET['code'];
                     <input type="text" id="hashInput" value=""><button class="search_hash">Submit</button>
                 </form>
             </div>
-            <p class="searched-hash"></p>
-            <div class="next-page">Next</div>
+            <div class="like-delay">
+                <p>Like Delay: </p>
+                <select name="likeDelay">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                </select>
+            </div>
             <div class="like-selected">Like Selected</div>
             <div class="like-all">Like All</div>
-            <ul class="search-results">
-                <!--<li class="results-item"><img src="" /></li>-->
-            </ul>
+            <p class="searched-hash"></p>
+            <div class="next-page">Next</div>
+            <ul class="search-results"></ul>
         </div>
 
 

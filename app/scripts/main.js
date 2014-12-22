@@ -11,7 +11,7 @@
 	});
 
 	function loadProfile(){
-		//var igLoggedIn = hello('instagram').getAuthResponse();
+		var igLoggedIn = hello('instagram').getAuthResponse();
 		// get profile
 		hello('instagram').api('me', function(data){
 			if(data.meta.code === 200){
@@ -28,6 +28,7 @@
   function searchHash(hashText){
   	// empty current results
   	$('.search-results').empty();
+  	$('.searched-hash').html('#'+hashText);
   	$.ajax({
   		type:'GET',
   		dataType:'jsonp',
@@ -91,7 +92,6 @@
   }
 
   function likePhoto(photoId){
-  	console.log(photoId);
   	hello('instagram').api('me/like', 'post', { id : photoId }).then( function(r){
   			console.log(r);
   			if(r.meta.code === 200){
@@ -138,6 +138,7 @@
 			userToken = null;
 		});
 		$('.loggedInUser').empty();
+		$('.login').show();
 	});
 
 	$('#hashSearch').on('submit', function(e){
@@ -157,6 +158,7 @@
 		//instagram.api('me').then(loadProfile);
 		hello.on('auth.login', function(auth){
 			loadProfile();
+			$('.login').hide();
 		});
 	});
 
