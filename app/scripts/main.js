@@ -23,6 +23,7 @@
 				userToken = igLoggedIn.access_token;
 				console.log('User ID: '+userID);
 				$('.loggedInUser').html('Logged in as @'+data.data.username);
+        $('.loggedInFollowers').html('Followers: '+data.data.counts.followed_by);
 			}
 		});
 	}
@@ -90,6 +91,7 @@
   	var photosSelected = $('.results-item.active').length;
   	var photosToLike = [];
   	var currentPhoto = 0;
+  	console.log(likeDelay);
   	// put all selected photos into an array
   	$.each($('.results-item.active'), function(i,v){
   		var mediaId = $(v).attr('data-id');
@@ -132,10 +134,7 @@
   }
 
 	$('button.login').on('click',function(){
-		hello('instagram').login({
-			scope : 'likes',
-			redirect_uri:'index.html'
-		});
+		hello('instagram').login({scope : 'likes'});
 	});
 
 	$('.next-page').on('click',function(){

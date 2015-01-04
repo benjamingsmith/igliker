@@ -1,21 +1,3 @@
-<!--<?php
-
-require 'instagram.class.php';
-
-// initialize class
-$instagram = new Instagram(array(
-  'apiKey'      => 'ba466f6c17c64ff99b229085129f7cd9',
-  'apiSecret'   => 'd4e44c6a4a2548f79412b1b2b8a37e54',
-  'apiCallback' => '/success.php' // must point to success.php
-));
-
-// create login URL
-$loginUrl = $instagram->getLoginUrl();
-
-$code = $_GET['code'];
-
-?>-->
-
 <!doctype html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -41,11 +23,13 @@ $code = $_GET['code'];
         <![endif]-->
         <div class="container">
             <div class="login-btns">
-                <button class="login" ><a href="<? echo $loginUrl ?>">Login</a></button>
+                <button class="login">Login</button>
                 <button class="logout">Log Out</button>
             </div>
-            <p class="loggedInUser"></p>
-
+            <div class="loggedin">
+                <p class="loggedInUser"></p>
+                <p class="loggedInFollowers"></p>
+            </div>
             <div class="search">
                 <form id="hashSearch">
                     <input type="text" id="hashInput" value=""><button class="search_hash">Submit</button>
